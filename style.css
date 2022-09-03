@@ -1,0 +1,416 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+    background-color:black;
+    box-sizing:border-box;
+    position:absolute;
+    width:100%;
+    height:100%;
+    margin:0px;
+    display:block;
+}
+
+#pausebutton {
+    height: 65px;
+    width: 65px;
+    background-color:black;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:25px;
+    margin-bottom:25px;
+
+    background-image:url("images/pause.png");
+    background-size:100% 100%;
+}
+/*
+@media (min-height: 800px) {
+    #pause {
+        top:100px;
+    }
+}*/
+
+.container {
+    background-color:black;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    top:50%;
+    left:50%;
+    width:95%;
+    height:431px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+/*
+
+---- ICONS SECTION ----
+
+*/
+
+.iconboard {
+    height:100%;
+    width:65px;
+    background-color:black;
+}
+
+.iconboard > #counticon {
+    height:25px;
+    width:100%;
+    background-color:black;
+    margin:2px 0px;
+}
+
+.iconboard > #haticon {
+    height:65px;
+    width:100%;
+    background-color:black;
+    margin:2px 0px;
+    background-image:url("images/hihat.png");
+    background-size:100% 100%;
+}
+
+.iconboard > #snareicon {
+    height:65px;
+    width:100%;
+    background-color:black;
+    margin:2px 0px;
+    background-image:url("images/snare.png");
+    background-size:100% 100%;
+}
+
+.iconboard > #kickicon {
+    height:65px;
+    width:100%;
+    background-color:black;
+    margin:2px 0px;
+    background-image:url("images/kick.png");
+    background-size:100% 100%;
+}
+
+.iconboard > #openhaticon {
+    height:65px;
+    width:100%;
+    background-color:black;
+    margin:2px 0px;
+    background-image:url("images/openhat.png");
+    background-size:100% 100%;
+}
+
+.iconboard > #rimicon {
+    height:65px;
+    width:100%;
+    background-color:black;
+    margin:2px 0px;
+    background-image:url("images/rim.png");
+    background-size:100% 100%;
+}
+
+.iconboard > #clapicon {
+    height:65px;
+    width:100%;
+    background-color:black;
+    margin:2px 0px;
+    background-image:url("images/clap.png");
+    background-size:100% 100%;
+}
+
+/*
+
+---- OPTIONS SECTION ----
+
+*/
+
+.optionboard {
+    display:block;
+    height:100%;
+    width:10%;
+    background-color:black;
+}
+
+#countoption {
+    height:25px;
+    width:100%;
+    background-color:black;
+    margin:2px 0px;
+}
+
+#hatoption {
+    width:100%;
+    height:65px;
+    margin:2px 0px;
+    display:flex;
+}
+
+#hatoption > #hatfill {
+    width:1000px;
+    border:1px solid black;
+    background-color:lightgrey;
+}
+
+#hatoption > #haterase {
+    width:1000px;
+    border:1px solid black;
+    background-color:darkgrey;
+}
+
+#snareoption {
+    width:100%;
+    height:65px;
+    margin:2px 0px;
+    display:flex;
+}
+
+#snareoption > #snarefill {
+    width:1000px;
+    border:1px solid black;
+    background-color:lightgrey;
+}
+
+#snareoption > #snareerase {
+    width:1000px;
+    border:1px solid black;
+    background-color:darkgrey;
+}
+
+#kickoption {
+    width:100%;
+    height:65px;
+    margin:2px 0px;
+    display:flex;
+}
+
+#kickoption > #kickfill {
+    width:1000px;
+    border:1px solid black;
+    background-color:lightgrey;
+}
+
+#kickoption > #kickerase {
+    width:1000px;
+    border:1px solid black;
+    background-color:darkgrey;
+}
+
+#openhatoption {
+    width:100%;
+    height:65px;
+    margin:2px 0px;
+    display:flex;
+}
+
+#openhatoption > #openhatfill {
+    width:1000px;
+    border:1px solid black;
+    background-color:lightgrey;
+}
+
+#openhatoption > #openhaterase {
+    width:1000px;
+    border:1px solid black;
+    background-color:darkgrey;
+}
+
+#rimoption {
+    width:100%;
+    height:65px;
+    margin:2px 0px;
+    display:flex;
+}
+
+#rimoption > #rimfill {
+    width:1000px;
+    border:1px solid black;
+    background-color:lightgrey;
+}
+
+#rimoption > #rimerase {
+    width:1000px;
+    border:1px solid black;
+    background-color:darkgrey;
+}
+
+#clapoption {
+    width:100%;
+    height:65px;
+    margin:2px 0px;
+    display:flex;
+}
+
+#clapoption > #clapfill {
+    width:1000px;
+    border:1px solid black;
+    background-color:lightgrey;
+}
+
+#clapoption > #claperase {
+    width:1000px;
+    border:1px solid black;
+    background-color:darkgrey;
+}
+
+/*
+
+---- MUSIC SECTION ----
+
+*/
+
+.musicboard {
+    display:block;
+    width:80%;
+    margin:0px 2px;
+}
+
+#countrow {
+    width:100%;
+    height:25px;
+    margin:2px 0px;
+    display:flex;
+}
+
+.countbutton {
+    width:1000px;
+    border:1px solid black;
+    background-color:grey;
+}
+
+#hatrow {
+    width:100%;
+    height:65px;
+    margin:2px 0px;
+    display:flex;
+    /*box-shadow:0px 0px 5px #ffffff;*/
+}
+
+.hatbutton {
+    width:1000px;
+    border:1px solid black;
+    background-color:grey;
+}
+
+#hatfill {
+    background-color:grey;
+}
+
+#snarerow {
+    width:100%;
+    height:65px;
+    margin:2px 0px;
+    display:flex;
+}
+
+.snarebutton {
+    width:1000px;
+    border:1px solid black;
+    background-color:grey;
+}
+
+#kickrow {
+    margin:2px 0px;
+    display:flex;
+    height:65px;
+}
+
+.kickbutton {
+    width:1000px;
+    border:1px solid black;
+    background-color:grey;
+}
+
+#openhatrow {
+    margin:2px 0px;
+    display:flex;
+    height:65px;
+}
+
+.openhatbutton {
+    width:1000px;
+    border:1px solid black;
+    background-color:grey;
+}
+
+#rimrow {
+    margin:2px 0px;
+    display:flex;
+    height:65px;
+}
+
+.rimbutton {
+    width:1000px;
+    border:1px solid black;
+    background-color:grey;
+}
+
+#claprow {
+    margin:2px 0px;
+    display:flex;
+    height:65px;
+}
+
+.clapbutton {
+    width:1000px;
+    border:1px solid black;
+    background-color:grey;
+}
+
+/*
+
+---- DROPDOWN/BPM SLIDER ----
+
+*/
+
+.bpmcontainer {
+    justify-content:center;
+    align-items:center;
+    box-sizing:border-box;
+    margin-top:25px;
+    margin-bottom:25px;
+    display:flex;
+}
+
+#kitmenu {
+    -webkit-appearance:none;
+    appearance:none;
+    -webkit-user-select: none;
+    user-select: none;
+    font-size:20px;
+    font-family:'Roboto',sans-serif;
+    color:lightgrey;
+    border:2px solid grey;
+    height:30px;
+    width:120px;
+    padding-left:5px;
+    filter:grayscale(1);
+    background:url("images/icon.png") 95% / 20% no-repeat black;
+    margin-left:auto;
+    margin-right:25px;
+
+}
+
+.slider {
+    -webkit-appearance:none;
+    background-color:black;
+    border:2px solid grey;
+    height:25px;
+    width:50%;
+}
+
+.slider::-webkit-slider-thumb {
+    cursor:pointer;
+    background-color:pink;
+    appearance:none;
+    width:25px;
+    height:25px;
+}
+
+#bpmlabel {
+    color:darkgrey;
+    -webkit-user-select: none;
+    user-select: none;
+    font-size:25px;
+    font-family:'Roboto',sans-serif;
+    margin-right:auto;
+    margin-left:25px;
+    white-space:nowrap;
+    width:110px;
+}

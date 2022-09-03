@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Drum looper</title>
+        <link rel="stylesheet" href="style.css"/>
+        <link rel="icon" type="image/png" href="images/icon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div id="pausebutton"></div>
+
+        <div class="container">
+
+            <div class="iconboard">
+                <div id="counticon"></div>
+                <div id="haticon"></div>
+                <div id="snareicon"></div>
+                <div id="kickicon"></div>
+                <div id="openhaticon"></div>
+                <div id="rimicon"></div>
+                <div id="clapicon"></div>
+            </div>
+
+            <div class="musicboard">
+
+                <div id="countrow">
+                    <script>
+                        for(var i = 0; i < 16; i++) {
+                            var div = document.createElement("div");
+                            div.id = "count" + i;
+                            div.className = "countbutton";
+                            document.getElementById("countrow").appendChild(div);
+                        }
+                    </script>
+                </div>
+
+                <div id="hatrow">
+                    <script>
+                        for(var i = 0; i < 16; i++) {
+                            var div = document.createElement("div");
+                            div.id = "hat" + i;
+                            div.className = "hatbutton";
+                            document.getElementById("hatrow").appendChild(div);
+                        }
+                    </script>
+                    <!--<div id="hat15" class="hatbutton"></div>-->
+                </div>
+
+                
+                <div id="snarerow">
+                    <script>
+                        for(var i = 0; i < 16; i++) {
+                            var div = document.createElement("div");
+                            div.id = "snare" + i;
+                            div.className = "snarebutton";
+                            document.getElementById("snarerow").appendChild(div);
+                        }
+                    </script>
+                </div>
+                
+                <div id="kickrow">
+                    <script>
+                        for(var i = 0; i < 16; i++) {
+                            var div = document.createElement("div");
+                            div.id = "kick" + i;
+                            div.className = "kickbutton";
+                            document.getElementById("kickrow").appendChild(div);
+                        }
+                    </script>
+                </div>
+                
+                <div id="openhatrow">
+                    <script>
+                        for(var i = 0; i < 16; i++) {
+                            var div = document.createElement("div");
+                            div.id = "openhat" + i;
+                            div.className = "openhatbutton";
+                            document.getElementById("openhatrow").appendChild(div);
+                        }
+                    </script>
+                </div>
+                
+                <div id="rimrow">
+                    <script>
+                        for(var i = 0; i < 16; i++) {
+                            var div = document.createElement("div");
+                            div.id = "rim" + i;
+                            div.className = "rimbutton";
+                            document.getElementById("rimrow").appendChild(div);
+                        }
+                    </script>
+                </div>
+                
+                <div id="claprow">
+                    <script>
+                        for(var i = 0; i < 16; i++) {
+                            var div = document.createElement("div");
+                            div.id = "clap" + i;
+                            div.className = "clapbutton";
+                            document.getElementById("claprow").appendChild(div);
+                        }
+                    </script>
+                </div>
+            </div>
+
+            <div class="optionboard">
+                <div id="countoption"></div>
+                <div id="hatoption">
+                    <div id="hatfill"></div>
+                    <div id="haterase"></div>
+                </div>
+                <div id="snareoption">
+                    <div id="snarefill"></div>
+                    <div id="snareerase"></div>
+                </div>
+                <div id="kickoption">
+                    <div id="kickfill"></div>
+                    <div id="kickerase"></div>
+                </div>
+                <div id="openhatoption">
+                    <div id="openhatfill"></div>
+                    <div id="openhaterase"></div>
+                </div>
+                <div id="rimoption">
+                    <div id="rimfill"></div>
+                    <div id="rimerase"></div>
+                </div>
+                <div id="clapoption">
+                    <div id="clapfill"></div>
+                    <div id="claperase"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bpmcontainer">
+            <select id="kitmenu">
+                <option value="trap" selected>Trap</option>
+                <option value="live">Live</option>
+                <option value="machine">Machine</option>
+            </select>
+
+            <input type="range" min="20" max="400" value="154" id="bpmslider" class="slider">
+            <span id="bpmlabel">154 BPM</span>
+        </div>
+
+    </body>
+    <script src="app.js"></script>
+</html>
