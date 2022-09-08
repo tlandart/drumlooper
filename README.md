@@ -8,4 +8,4 @@ A drum sequencer made using HTML/javascript.
 * Pause/play button
 * Fill/erase for each row
 
-![drum looper sequencer drumlooper](https://user-images.githubusercontent.com/76754714/188292741-ef0dcdb2-7ae0-4691-bd26-4a52ff60a921.gif)
+https://user-images.githubusercontent.com/76754714/189009918-bf94124a-8ad4-4fd2-af28-bc48dee66173.mp4
