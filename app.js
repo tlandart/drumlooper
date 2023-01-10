@@ -368,14 +368,6 @@ let kitmenu = document.getElementById("kitmenu");
 kitmenu.onchange = function() {
 
     path = "sounds/" + kitmenu.value + "/";
-    
-    hatSound.src = path + "hat.mp3";
-    snareSound.src = path + "snare.mp3";
-    kickSound.src = path + "kick.mp3";
-    openhatSound.src = path + "openhat.mp3";
-    percSound.src = path + "perc.mp3";
-    clapSound.src = path + "clap.mp3";
-    extraSound.src = path + "extra.mp3";
 
     // reload the samples
     setupSamples().then((samples) => {
