@@ -1,3 +1,5 @@
+// NOTE: ONLY WORKS WITH A SERVER, CANNOT JUST OPEN THE INDEX FILE
+
 let BPM = 154;
 let BPMCALC = 1000/((4*BPM)/60);
 let swing = -BPMCALC*0;
@@ -293,8 +295,9 @@ function increment(timestamp, duration) {
     let runtime = timestamp - starttime;
     if(runtime > duration + swing && !paused) {
         starttime = timestamp;
-        swing = -swing; // we will increase or shorten the time of the next update so it matches the swing depending on if its an even position or not
         update();
+        // the swing will add or subtract from the duration (longer or shorter wait time)
+        swing = pos % 2 === 0 ? -Math.abs(swing):Math.abs(swing);
     }
     requestAnimationFrame(function(timestamp) {
         increment(timestamp, BPMCALC);
@@ -352,7 +355,7 @@ let swinglabel = document.getElementById("swinglabel");
 
 swingslider.oninput = function() {
     swing = (swingslider.value/100)*-BPMCALC;
-    swinglabel.innerHTML = 2*swingslider.value + "% swing";
+    swinglabel.innerHTML = swingslider.value + "% swing";
     start(BPMCALC);
 }
 
