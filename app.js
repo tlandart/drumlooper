@@ -1,17 +1,14 @@
 let BPM = 154;
 let BPMCALC = 1000/((4*BPM)/60);
+let swing = -BPMCALC*0;
 const selectedCol = "pink";
 const unselectedCol = "grey";
+const numButtons = 32;
 
 let path = "sounds/1539/";
 
-let hatSound = new Audio(path + "hat.mp3");
-let snareSound = new Audio(path + "snare.mp3");
-let kickSound = new Audio(path + "kick.mp3");
-let openhatSound = new Audio(path + "openhat.mp3");
-let percSound = new Audio(path + "perc.mp3");
-let clapSound = new Audio(path + "clap.mp3");
-let extraSound = new Audio(path + "extra.mp3");
+// will be filled later when we load the sounds
+let hatSound, snareSound, kickSound, openhatSound, percSound, clapSound, extraSound = null;
 
 // THE POSITION ON THE TRACK
 let pos = 0;
@@ -42,6 +39,53 @@ function pauseFunction() {
 
 */
 
+// PLACE THEM ON THE PAGE -----------
+function placeDrumButton(name) {
+    for(var i = 0; i < numButtons; i++) {
+        var div = document.createElement("div");
+        div.id = name + i;
+        div.className = name + "button drumbutton";
+        document.getElementById(name + "row").appendChild(div);
+        div.style.setProperty("outline-offset", "-4px");
+        if(i%4 === 0 && i>0) { // place grid lines
+            div.style.borderLeftColor = "white";
+        }
+        else if((i+1)%4 === 0 && i+1<numButtons) { // place grid lines
+            div.style.borderRightColor = "white";
+        }
+    }
+}
+
+placeDrumButton("count");
+placeDrumButton("hat");
+placeDrumButton("snare");
+placeDrumButton("kick");
+placeDrumButton("openhat");
+placeDrumButton("perc");
+placeDrumButton("clap");
+placeDrumButton("extra");
+
+// ADD THE EVENTS -----------
+
+function changeVisualState(btn) {
+    if(btn.style.backgroundColor === selectedCol) {
+        visualDeselect(btn);
+    }
+    else {
+        visualSelect(btn);
+    }
+}
+
+function visualSelect(btn) {
+    btn.style.setProperty("outline", "2px dashed rgba(0,0,0,0.3)");
+    btn.style.backgroundColor = selectedCol;
+}
+
+function visualDeselect(btn) {
+    btn.style.setProperty("outline", "none");
+    btn.style.backgroundColor = unselectedCol;
+}
+
 const counts = document.querySelectorAll(".countbutton");
 
 counts.forEach(function(count) {
@@ -49,127 +93,58 @@ counts.forEach(function(count) {
 
         // clears the entire countrow
         counts.forEach(function(count) {
-            count.style.backgroundColor = unselectedCol;
+            visualDeselect(count);
         });
 
-        // selects the countrow that was clicked
+        // selects the countrow button that was clicked
         pos = Array.from(counts).indexOf(event.target);
         let btn = document.getElementById("count" + pos);
-        btn.style.backgroundColor = selectedCol;
+        visualSelect(btn);
     });
 });
+
+// do this function for each row of drum buttons
+function drumButtonEventAdder(buttonRow, name) {
+    buttonRow.forEach(function(button) {
+        // for dragging
+        button.addEventListener("mouseover", function(event) {
+            if(event.buttons == 1) {
+                let i = Array.from(buttonRow).indexOf(event.target);
+                let btn = document.getElementById(name + i);
+        
+                changeVisualState(btn);
+            }
+        });
+        // for just clicking
+        button.addEventListener("mousedown", function(event) {
+            let i = Array.from(buttonRow).indexOf(event.target);
+            let btn = document.getElementById(name + i);
+        
+            changeVisualState(btn);
+        });
+    });
+}
 
 const hats = document.querySelectorAll(".hatbutton");
-
-hats.forEach(function(hat) {
-    hat.addEventListener("mousedown", function(event) {
-        let i = Array.from(hats).indexOf(event.target);
-        let btn = document.getElementById("hat" + i);
-
-        if(btn.style.backgroundColor == selectedCol) {
-            btn.style.backgroundColor = unselectedCol;
-        }
-        else {
-            btn.style.backgroundColor = selectedCol;
-        }
-    });
-});
+drumButtonEventAdder(hats,"hat");
 
 const snares = document.querySelectorAll(".snarebutton");
-
-snares.forEach(function(snare) {
-    snare.addEventListener("mousedown", function(event) {
-        let i = Array.from(snares).indexOf(event.target);
-        let btn = document.getElementById("snare" + i);
-
-        if(btn.style.backgroundColor == selectedCol) {
-            btn.style.backgroundColor = unselectedCol;
-        }
-        else {
-            btn.style.backgroundColor = selectedCol;
-        }
-    });
-});
+drumButtonEventAdder(snares,"snare");
 
 const kicks = document.querySelectorAll(".kickbutton");
-
-kicks.forEach(function(kick) {
-    kick.addEventListener("mousedown", function(event) {
-        let i = Array.from(kicks).indexOf(event.target);
-        let btn = document.getElementById("kick" + i);
-
-        if(btn.style.backgroundColor == selectedCol) {
-            btn.style.backgroundColor = unselectedCol;
-        }
-        else {
-            btn.style.backgroundColor = selectedCol;
-        }
-    });
-});
+drumButtonEventAdder(kicks, "kick");
 
 const openhats = document.querySelectorAll(".openhatbutton");
-
-openhats.forEach(function(openhat) {
-    openhat.addEventListener("mousedown", function(event) {
-        let i = Array.from(openhats).indexOf(event.target);
-        let btn = document.getElementById("openhat" + i);
-
-        if(btn.style.backgroundColor == selectedCol) {
-            btn.style.backgroundColor = unselectedCol;
-        }
-        else {
-            btn.style.backgroundColor = selectedCol;
-        }
-    });
-});
+drumButtonEventAdder(openhats, "openhat");
 
 const percs = document.querySelectorAll(".percbutton");
-
-percs.forEach(function(perc) {
-    perc.addEventListener("mousedown", function(event) {
-        let i = Array.from(percs).indexOf(event.target);
-        let btn = document.getElementById("perc" + i);
-
-        if(btn.style.backgroundColor == selectedCol) {
-            btn.style.backgroundColor = unselectedCol;
-        }
-        else {
-            btn.style.backgroundColor = selectedCol;
-        }
-    });
-});
+drumButtonEventAdder(percs, "perc");
 
 const claps = document.querySelectorAll(".clapbutton");
-
-claps.forEach(function(clap) {
-    clap.addEventListener("mousedown", function(event) {
-        let i = Array.from(claps).indexOf(event.target);
-        let btn = document.getElementById("clap" + i);
-
-        if(btn.style.backgroundColor == selectedCol) {
-            btn.style.backgroundColor = unselectedCol;
-        }
-        else {
-            btn.style.backgroundColor = selectedCol;
-        }
-    });
-});
+drumButtonEventAdder(claps, "clap");
 
 const extras = document.querySelectorAll(".extrabutton");
-
-extras.forEach(function(extra) {
-    extra.addEventListener("mousedown", function(event) {
-        let i = Array.from(extras).indexOf(event.target);
-        let btn = document.getElementById("extra" + i);
-
-        if(btn.style.backgroundColor == selectedCol) {
-            btn.style.backgroundColor = unselectedCol;
-        }
-        else {
-            btn.style.backgroundColor = selectedCol;
-        }
-    });
-});
+drumButtonEventAdder(extras, "extra");
 
 /*
 
@@ -177,103 +152,60 @@ extras.forEach(function(extra) {
 
 */
 
+function optionButtonEventAdder(fillButton, eraseButton, buttonRow) {
+    fillButton.addEventListener("mousedown", function() {
+        buttonRow.forEach(function(button) {
+            visualSelect(button);
+        });
+    });
+    fillButton.addEventListener("mouseover", function(event) {
+        if(event.buttons == 1) {
+            buttonRow.forEach(function(button) {
+                visualSelect(button);
+            });
+        }
+    });
+    eraseButton.addEventListener("mousedown", function() {
+        buttonRow.forEach(function(button) {
+            visualDeselect(button);
+        });
+    });
+    eraseButton.addEventListener("mouseover", function(event) {
+        if(event.buttons == 1) {
+            buttonRow.forEach(function(button) {
+                visualDeselect(button);
+            });
+        }
+    });
+}
+
 const hatFill = document.getElementById("hatfill");
 const hatErase = document.getElementById("haterase");
-
-hatFill.addEventListener("mousedown", function() {
-    hats.forEach(function(hat) {
-        hat.style.backgroundColor = selectedCol;
-    });
-});
-hatErase.addEventListener("mousedown", function() {
-    hats.forEach(function(hat) {
-        hat.style.backgroundColor = unselectedCol;
-    });
-});
+optionButtonEventAdder(hatFill, hatErase, hats);
 
 const snareFill = document.getElementById("snarefill");
 const snareErase = document.getElementById("snareerase");
-
-snareFill.addEventListener("mousedown", function() {
-    snares.forEach(function(snare) {
-        snare.style.backgroundColor = selectedCol;
-    });
-});
-snareErase.addEventListener("mousedown", function() {
-    snares.forEach(function(snare) {
-        snare.style.backgroundColor = unselectedCol;
-    });
-});
+optionButtonEventAdder(snareFill, snareErase, snares);
 
 const kickFill = document.getElementById("kickfill");
 const kickErase = document.getElementById("kickerase");
-
-kickFill.addEventListener("mousedown", function() {
-    kicks.forEach(function(kick) {
-        kick.style.backgroundColor = selectedCol;
-    });
-});
-kickErase.addEventListener("mousedown", function() {
-    kicks.forEach(function(kick) {
-        kick.style.backgroundColor = unselectedCol;
-    });
-});
+optionButtonEventAdder(kickFill, kickErase, kicks);
 
 const openhatFill = document.getElementById("openhatfill");
 const openhatErase = document.getElementById("openhaterase");
-
-openhatFill.addEventListener("mousedown", function() {
-    openhats.forEach(function(openhat) {
-        openhat.style.backgroundColor = selectedCol;
-    });
-});
-openhatErase.addEventListener("mousedown", function() {
-    openhats.forEach(function(openhat) {
-        openhat.style.backgroundColor = unselectedCol;
-    });
-});
+optionButtonEventAdder(openhatFill, openhatErase, openhats);
 
 const percFill = document.getElementById("percfill");
 const percErase = document.getElementById("percerase");
-
-percFill.addEventListener("mousedown", function() {
-    percs.forEach(function(perc) {
-        perc.style.backgroundColor = selectedCol;
-    });
-});
-percErase.addEventListener("mousedown", function() {
-    percs.forEach(function(perc) {
-        perc.style.backgroundColor = unselectedCol;
-    });
-});
+optionButtonEventAdder(percFill, percErase, percs);
 
 const clapFill = document.getElementById("clapfill");
 const clapErase = document.getElementById("claperase");
-
-clapFill.addEventListener("mousedown", function() {
-    claps.forEach(function(clap) {
-        clap.style.backgroundColor = selectedCol;
-    });
-});
-clapErase.addEventListener("mousedown", function() {
-    claps.forEach(function(clap) {
-        clap.style.backgroundColor = unselectedCol;
-    });
-});
+optionButtonEventAdder(clapFill, clapErase, claps);
 
 const extraFill = document.getElementById("extrafill");
 const extraErase = document.getElementById("extraerase");
-
-extraFill.addEventListener("mousedown", function() {
-    extras.forEach(function(extra) {
-        extra.style.backgroundColor = selectedCol;
-    });
-});
-extraErase.addEventListener("mousedown", function() {
-    extras.forEach(function(extra) {
-        extra.style.backgroundColor = unselectedCol;
-    });
-});
+optionButtonEventAdder(extraFill, extraErase, extras);
 
 /*
 
@@ -281,55 +213,87 @@ extraErase.addEventListener("mousedown", function() {
 
 */
 
-function loadSound() {
-    hatSound.load();
-    snareSound.load();
-    kickSound.load();
-    openhatSound.load();
-    percSound.load();
-    clapSound.load();
-    extraSound.load();
+// LARGELY ADAPTED FROM https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Advanced_techniques
+
+let ctx = new AudioContext();
+let soundBuffer = null;
+
+async function getFile(audioContext, filepath) {
+    const response = await fetch(filepath);
+    const arrayBuffer = await response.arrayBuffer();
+    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+    return audioBuffer;
 }
 
-// plays the audio for the column with index num
+async function setupSamples() {
+    let paths = [];
+    paths[0] = path + "hat.mp3";
+    paths[1] = path + "snare.mp3";
+    paths[2] = path + "kick.mp3";
+    paths[3] = path + "openhat.mp3";
+    paths[4] = path + "perc.mp3";
+    paths[5] = path + "clap.mp3";
+    paths[6] = path + "extra.mp3";
+
+    let samples = [];
+
+    for(let i=0; i<7; i++) {
+        samples[i] = await getFile(ctx, paths[i]);
+    }
+    return samples;
+}
+
+function playSample(audioContext, audioBuffer, time) {
+    const sampleSource = new AudioBufferSourceNode(audioContext, {buffer: audioBuffer});
+    sampleSource.connect(audioContext.destination);
+    sampleSource.start(time);
+    return sampleSource;
+}
+
+setupSamples().then((samples) => {
+    hatSound = samples[0];
+    snareSound = samples[1];
+    kickSound = samples[2];
+    openhatSound = samples[3];
+    percSound = samples[4];
+    clapSound = samples[5];
+    extraSound = samples[6];
+    start();
+});
+
+// plays the audio for the column at that position
 function playSoundCol(num) {
-    for(let i = 0; i < hats.length; i++) {
-        if(document.getElementById("hat" + num).style.backgroundColor == selectedCol) {
-            hatSound.currentTime = 0;
-            hatSound.play();
-        }
-        if(document.getElementById("snare" + num).style.backgroundColor == selectedCol) {
-            snareSound.currentTime = 0;
-            snareSound.play();
-        }
-        if(document.getElementById("kick" + num).style.backgroundColor == selectedCol) {
-            kickSound.currentTime = 0;
-            kickSound.play();
-        }
-        if(document.getElementById("openhat" + num).style.backgroundColor == selectedCol) {
-            openhatSound.currentTime = 0;
-            openhatSound.play();
-        }
-        if(document.getElementById("perc" + num).style.backgroundColor == selectedCol) {
-            percSound.currentTime = 0;
-            percSound.play();
-        }
-        if(document.getElementById("clap" + num).style.backgroundColor == selectedCol) {
-            clapSound.currentTime = 0;
-            clapSound.play();
-        }
-        if(document.getElementById("extra" + num).style.backgroundColor == selectedCol) {
-            extraSound.currentTime = 0;
-            extraSound.play();
-        }
+    if(document.getElementById("hat" + num).style.backgroundColor == selectedCol) {
+        playSample(ctx,hatSound,0);
+    }
+    if(document.getElementById("snare" + num).style.backgroundColor == selectedCol) {
+        playSample(ctx,snareSound,0);
+    }
+    if(document.getElementById("kick" + num).style.backgroundColor == selectedCol) {
+        playSample(ctx,kickSound,0);
+    }
+    if(document.getElementById("openhat" + num).style.backgroundColor == selectedCol) {
+        playSample(ctx,openhatSound,0);
+    }
+    if(document.getElementById("perc" + num).style.backgroundColor == selectedCol) {
+        playSample(ctx,percSound,0);
+    }
+    if(document.getElementById("clap" + num).style.backgroundColor == selectedCol) {
+        playSample(ctx,clapSound,0);
+    }
+    if(document.getElementById("extra" + num).style.backgroundColor == selectedCol) {
+        playSample(ctx,extraSound,0);
     }
 }
+
+// DONE SOUND STUFF
 
 let starttime;
 function increment(timestamp, duration) {
     let runtime = timestamp - starttime;
-    if(runtime > duration && !paused) {
+    if(runtime > duration + swing && !paused) {
         starttime = timestamp;
+        swing = -swing; // we will increase or shorten the time of the next update so it matches the swing depending on if its an even position or not
         update();
     }
     requestAnimationFrame(function(timestamp) {
@@ -344,16 +308,13 @@ function start() {
     });
 }
 
-loadSound();
-start();
-
 function update() {
     if(paused == false) {
 
         if(pos >= snares.length) {
             pos = 0;
         }
-        document.getElementById("count" + pos).style.backgroundColor = selectedCol;
+        visualSelect(document.getElementById("count" + pos));
         
         let prev;
         if(pos > 0) {
@@ -362,7 +323,8 @@ function update() {
         else {
             prev = snares.length - 1;
         }
-        document.getElementById("count" + prev).style.backgroundColor = unselectedCol;
+        visualDeselect(document.getElementById("count" + prev));
+
         playSoundCol(pos);
 
         pos++;
@@ -371,17 +333,26 @@ function update() {
 
 /*
 
----- SLIDER ----
+---- SLIDERS ----
 
 */
 
-let slider = document.getElementById("bpmslider");
+let bpmslider = document.getElementById("bpmslider");
 let bpmlabel = document.getElementById("bpmlabel");
 
-slider.oninput = function() {
-    BPM = slider.value;
+bpmslider.oninput = function() {
+    BPM = bpmslider.value;
     BPMCALC = 1000/((4*BPM)/60);
     bpmlabel.innerHTML = BPM + " BPM";
+    start(BPMCALC);
+}
+
+let swingslider = document.getElementById("swingslider");
+let swinglabel = document.getElementById("swinglabel");
+
+swingslider.oninput = function() {
+    swing = (swingslider.value/100)*-BPMCALC;
+    swinglabel.innerHTML = 2*swingslider.value + "% swing";
     start(BPMCALC);
 }
 
@@ -405,7 +376,20 @@ kitmenu.onchange = function() {
     percSound.src = path + "perc.mp3";
     clapSound.src = path + "clap.mp3";
     extraSound.src = path + "extra.mp3";
+
+    // reload the samples
+    setupSamples().then((samples) => {
+        hatSound = samples[0];
+        snareSound = samples[1];
+        kickSound = samples[2];
+        openhatSound = samples[3];
+        percSound = samples[4];
+        clapSound = samples[5];
+        extraSound = samples[6];
+        start();
+    });
 }
 
 // TODO add volume slider
 // TODO clean up code using class names
+// TODO add swing slider

@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Drum looper</title>
+        <title>drumlooper</title>
         <link rel="stylesheet" href="style.css"/>
         <link rel="icon" type="image/png" href="images/icon.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+
+        <div class="top-bar">
+            <span>Tip: click and drag to make patterns faster!</span>
+        </div>
+
         <div id="pausebutton"></div>
 
         <div class="container">
@@ -24,126 +29,45 @@
 
             <div class="musicboard">
 
-                <div id="countrow">
-                    <script>
-                        for(var i = 0; i < 32; i++) {
-                            var div = document.createElement("div");
-                            div.id = "count" + i;
-                            div.className = "countbutton";
-                            document.getElementById("countrow").appendChild(div);
-                        }
-                    </script>
-                </div>
-
-                <div id="hatrow">
-                    <script>
-                        for(var i = 0; i < 32; i++) {
-                            var div = document.createElement("div");
-                            div.id = "hat" + i;
-                            div.className = "hatbutton";
-                            document.getElementById("hatrow").appendChild(div);
-                        }
-                    </script>
-                    <!--<div id="hat15" class="hatbutton"></div>-->
-                </div>
-
-                
-                <div id="snarerow">
-                    <script>
-                        for(var i = 0; i < 32; i++) {
-                            var div = document.createElement("div");
-                            div.id = "snare" + i;
-                            div.className = "snarebutton";
-                            document.getElementById("snarerow").appendChild(div);
-                        }
-                    </script>
-                </div>
-                
-                <div id="kickrow">
-                    <script>
-                        for(var i = 0; i < 32; i++) {
-                            var div = document.createElement("div");
-                            div.id = "kick" + i;
-                            div.className = "kickbutton";
-                            document.getElementById("kickrow").appendChild(div);
-                        }
-                    </script>
-                </div>
-                
-                <div id="openhatrow">
-                    <script>
-                        for(var i = 0; i < 32; i++) {
-                            var div = document.createElement("div");
-                            div.id = "openhat" + i;
-                            div.className = "openhatbutton";
-                            document.getElementById("openhatrow").appendChild(div);
-                        }
-                    </script>
-                </div>
-                
-                <div id="percrow">
-                    <script>
-                        for(var i = 0; i < 32; i++) {
-                            var div = document.createElement("div");
-                            div.id = "perc" + i;
-                            div.className = "percbutton";
-                            document.getElementById("percrow").appendChild(div);
-                        }
-                    </script>
-                </div>
-                
-                <div id="claprow">
-                    <script>
-                        for(var i = 0; i < 32; i++) {
-                            var div = document.createElement("div");
-                            div.id = "clap" + i;
-                            div.className = "clapbutton";
-                            document.getElementById("claprow").appendChild(div);
-                        }
-                    </script>
-                </div>
-                
-                <div id="extrarow">
-                    <script>
-                        for(var i = 0; i < 32; i++) {
-                            var div = document.createElement("div");
-                            div.id = "extra" + i;
-                            div.className = "extrabutton";
-                            document.getElementById("extrarow").appendChild(div);
-                        }
-                    </script>
-                </div>
+                <div id="countrow"></div>
+                <div id="hatrow" class="drumbuttonrow"></div>
+                <div id="snarerow" class="drumbuttonrow"></div>
+                <div id="kickrow" class="drumbuttonrow"></div>
+                <div id="openhatrow" class="drumbuttonrow"></div>
+                <div id="percrow" class="drumbuttonrow"></div>
+                <div id="claprow" class="drumbuttonrow"></div>
+                <div id="extrarow" class="drumbuttonrow"></div>
             </div>
 
             <div class="optionboard">
                 <div id="countoption"></div>
-                <div id="hatoption">
-                    <div id="hatfill"></div>
-                    <div id="haterase"></div>
+                <div class ="optionsection" id="hatoption">
+                    <div class="optionfill" id="hatfill"></div>
+                    <div class="optionerase" id="haterase"></div>
                 </div>
-                <div id="snareoption">
-                    <div id="snarefill"></div>
-                    <div id="snareerase"></div>
+                <div class ="optionsection" id="snareoption">
+                    <div class="optionfill" id="snarefill"></div>
+                    <div class="optionerase" id="snareerase"></div>
                 </div>
-                <div id="kickoption">
-                    <div id="kickfill"></div>
-                    <div id="kickerase"></div>
+                <div class ="optionsection" id="kickoption">
+                    <div class="optionfill" id="kickfill"></div>
+                    <div class="optionerase" id="kickerase"></div>
                 </div>
-                <div id="openhatoption">
-                    <div id="openhatfill"></div>
-                    <div id="openhaterase"></div>
+                <div class ="optionsection" id="openhatoption">
+                    <div class="optionfill" id="openhatfill"></div>
+                    <div class="optionerase" id="openhaterase"></div>
                 </div>
-                <div id="percoption">
-                    <div id="percfill"></div>
-                    <div id="percerase"></div>
+                <div class ="optionsection" id="percoption">
+                    <div class="optionfill" id="percfill"></div>
+                    <div class="optionerase" id="percerase"></div>
                 </div>
-                <div id="clapoption">
-                    <div id="clapfill"></div>
-                    <div id="claperase"></div>
+                <div class ="optionsection" id="clapoption">
+                    <div class="optionfill" id="clapfill"></div>
+                    <div class="optionerase" id="claperase"></div>
                 </div>
-                <div id="extraoption">
-                    <div id="extrafill"></div>
-                    <div id="extraerase"></div>
+                <div class ="optionsection" id="extraoption">
+                    <div class="optionfill" id="extrafill"></div>
+                    <div class="optionerase" id="extraerase"></div>
                 </div>
             </div>
         </div>
@@ -154,10 +78,18 @@
                 <option value="mach">mach</option>
                 <option value="alb">alb</option>
                 <option value="daft">daft</option>
+                <option value="threat">threat</option>
             </select>
 
             <input type="range" min="20" max="400" value="154" id="bpmslider" class="slider">
-            <span id="bpmlabel">154 BPM</span>
+            <span class="optionlabel" id="bpmlabel">154 BPM</span>
+
+            <input type="range" min="0" max="50" value="0" id="swingslider" class="slider" style="width:25%">
+            <span class="optionlabel" id="swinglabel">0% swing</span>
+        </div>
+
+        <div class="bottom-bar">
+            <span>By <a href="https://github.com/tlandart">tlandart</a> using Javascript.</span>
         </div>
 
     </body>
