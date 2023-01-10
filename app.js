@@ -1,21 +1,23 @@
-var BPM = 154;
+let BPM = 154;
+let BPMCALC = 1000/((4*BPM)/60);
 const selectedCol = "pink";
 const unselectedCol = "grey";
 
-var path = "sounds/trap/";
+let path = "sounds/1539/";
 
-var hatSound = new Audio(path + "hat.mp3");
-var snareSound = new Audio(path + "snare.mp3");
-var kickSound = new Audio(path + "kick.mp3");
-var openhatSound = new Audio(path + "openhat.mp3");
-var rimSound = new Audio(path + "rim.mp3");
-var clapSound = new Audio(path + "clap.mp3");
+let hatSound = new Audio(path + "hat.mp3");
+let snareSound = new Audio(path + "snare.mp3");
+let kickSound = new Audio(path + "kick.mp3");
+let openhatSound = new Audio(path + "openhat.mp3");
+let percSound = new Audio(path + "perc.mp3");
+let clapSound = new Audio(path + "clap.mp3");
+let extraSound = new Audio(path + "extra.mp3");
 
 // THE POSITION ON THE TRACK
-var pos = 0;
+let pos = 0;
 
 // WHETHER THE TRACK IS PAUSED OR NOT
-var paused = false;
+let paused = false;
 
 /*
 
@@ -23,18 +25,16 @@ var paused = false;
 
 */
 
-var pause = document.getElementById("pausebutton");
+let pause = document.getElementById("pausebutton");
 
 pause.addEventListener("mousedown", function() {
-    if(paused) {
-        pause.style.backgroundImage = "url('images/pause.png')";
-    }
-    else {
-        pause.style.backgroundImage = "url('images/play.png')";
-    }
-
-    paused = !paused;
+    pauseFunction();
 });
+
+function pauseFunction() {
+    pause.style.backgroundImage = paused ? "url('images/pause.png')" : "url('images/play.png')";
+    paused = !paused;
+}
 
 /*
 
@@ -46,10 +46,6 @@ const counts = document.querySelectorAll(".countbutton");
 
 counts.forEach(function(count) {
     count.addEventListener("mousedown", function(event) {
-        // newpos ensures it never goes to -1
-        /*var newpos = pos>0 ? pos-1 : 0;
-        var btnold = document.getElementById("count" + newpos);
-        btnold.style.backgroundColor = unselectedCol;*/
 
         // clears the entire countrow
         counts.forEach(function(count) {
@@ -58,7 +54,7 @@ counts.forEach(function(count) {
 
         // selects the countrow that was clicked
         pos = Array.from(counts).indexOf(event.target);
-        var btn = document.getElementById("count" + pos);
+        let btn = document.getElementById("count" + pos);
         btn.style.backgroundColor = selectedCol;
     });
 });
@@ -67,17 +63,14 @@ const hats = document.querySelectorAll(".hatbutton");
 
 hats.forEach(function(hat) {
     hat.addEventListener("mousedown", function(event) {
-        var i = Array.from(hats).indexOf(event.target);
-        var btn = document.getElementById("hat" + i);
+        let i = Array.from(hats).indexOf(event.target);
+        let btn = document.getElementById("hat" + i);
 
         if(btn.style.backgroundColor == selectedCol) {
             btn.style.backgroundColor = unselectedCol;
         }
         else {
             btn.style.backgroundColor = selectedCol;
-
-            //hatSound.currentTime = 0;
-            //hatSound.play();
         }
     });
 });
@@ -86,17 +79,14 @@ const snares = document.querySelectorAll(".snarebutton");
 
 snares.forEach(function(snare) {
     snare.addEventListener("mousedown", function(event) {
-        var i = Array.from(snares).indexOf(event.target);
-        var btn = document.getElementById("snare" + i);
+        let i = Array.from(snares).indexOf(event.target);
+        let btn = document.getElementById("snare" + i);
 
         if(btn.style.backgroundColor == selectedCol) {
             btn.style.backgroundColor = unselectedCol;
         }
         else {
             btn.style.backgroundColor = selectedCol;
-
-            //snareSound.currentTime = 0;
-            //snareSound.play();
         }
     });
 });
@@ -105,17 +95,14 @@ const kicks = document.querySelectorAll(".kickbutton");
 
 kicks.forEach(function(kick) {
     kick.addEventListener("mousedown", function(event) {
-        var i = Array.from(kicks).indexOf(event.target);
-        var btn = document.getElementById("kick" + i);
+        let i = Array.from(kicks).indexOf(event.target);
+        let btn = document.getElementById("kick" + i);
 
         if(btn.style.backgroundColor == selectedCol) {
             btn.style.backgroundColor = unselectedCol;
         }
         else {
             btn.style.backgroundColor = selectedCol;
-
-            //kickSound.currentTime = 0;
-            //kickSound.play();
         }
     });
 });
@@ -124,36 +111,30 @@ const openhats = document.querySelectorAll(".openhatbutton");
 
 openhats.forEach(function(openhat) {
     openhat.addEventListener("mousedown", function(event) {
-        var i = Array.from(openhats).indexOf(event.target);
-        var btn = document.getElementById("openhat" + i);
+        let i = Array.from(openhats).indexOf(event.target);
+        let btn = document.getElementById("openhat" + i);
 
         if(btn.style.backgroundColor == selectedCol) {
             btn.style.backgroundColor = unselectedCol;
         }
         else {
             btn.style.backgroundColor = selectedCol;
-
-            //openhatSound.currentTime = 0;
-            //openhatSound.play();
         }
     });
 });
 
-const rims = document.querySelectorAll(".rimbutton");
+const percs = document.querySelectorAll(".percbutton");
 
-rims.forEach(function(rim) {
-    rim.addEventListener("mousedown", function(event) {
-        var i = Array.from(rims).indexOf(event.target);
-        var btn = document.getElementById("rim" + i);
+percs.forEach(function(perc) {
+    perc.addEventListener("mousedown", function(event) {
+        let i = Array.from(percs).indexOf(event.target);
+        let btn = document.getElementById("perc" + i);
 
         if(btn.style.backgroundColor == selectedCol) {
             btn.style.backgroundColor = unselectedCol;
         }
         else {
             btn.style.backgroundColor = selectedCol;
-
-            //rimSound.currentTime = 0;
-            //rimSound.play();
         }
     });
 });
@@ -162,17 +143,30 @@ const claps = document.querySelectorAll(".clapbutton");
 
 claps.forEach(function(clap) {
     clap.addEventListener("mousedown", function(event) {
-        var i = Array.from(claps).indexOf(event.target);
-        var btn = document.getElementById("clap" + i);
+        let i = Array.from(claps).indexOf(event.target);
+        let btn = document.getElementById("clap" + i);
 
         if(btn.style.backgroundColor == selectedCol) {
             btn.style.backgroundColor = unselectedCol;
         }
         else {
             btn.style.backgroundColor = selectedCol;
+        }
+    });
+});
 
-            //clapSound.currentTime = 0;
-            //clapSound.play();
+const extras = document.querySelectorAll(".extrabutton");
+
+extras.forEach(function(extra) {
+    extra.addEventListener("mousedown", function(event) {
+        let i = Array.from(extras).indexOf(event.target);
+        let btn = document.getElementById("extra" + i);
+
+        if(btn.style.backgroundColor == selectedCol) {
+            btn.style.backgroundColor = unselectedCol;
+        }
+        else {
+            btn.style.backgroundColor = selectedCol;
         }
     });
 });
@@ -239,17 +233,17 @@ openhatErase.addEventListener("mousedown", function() {
     });
 });
 
-const rimFill = document.getElementById("rimfill");
-const rimErase = document.getElementById("rimerase");
+const percFill = document.getElementById("percfill");
+const percErase = document.getElementById("percerase");
 
-rimFill.addEventListener("mousedown", function() {
-    rims.forEach(function(rim) {
-        rim.style.backgroundColor = selectedCol;
+percFill.addEventListener("mousedown", function() {
+    percs.forEach(function(perc) {
+        perc.style.backgroundColor = selectedCol;
     });
 });
-rimErase.addEventListener("mousedown", function() {
-    rims.forEach(function(rim) {
-        rim.style.backgroundColor = unselectedCol;
+percErase.addEventListener("mousedown", function() {
+    percs.forEach(function(perc) {
+        perc.style.backgroundColor = unselectedCol;
     });
 });
 
@@ -267,6 +261,20 @@ clapErase.addEventListener("mousedown", function() {
     });
 });
 
+const extraFill = document.getElementById("extrafill");
+const extraErase = document.getElementById("extraerase");
+
+extraFill.addEventListener("mousedown", function() {
+    extras.forEach(function(extra) {
+        extra.style.backgroundColor = selectedCol;
+    });
+});
+extraErase.addEventListener("mousedown", function() {
+    extras.forEach(function(extra) {
+        extra.style.backgroundColor = unselectedCol;
+    });
+});
+
 /*
 
 ---- SET UP ALL THE SOUND STUFF ----
@@ -278,13 +286,14 @@ function loadSound() {
     snareSound.load();
     kickSound.load();
     openhatSound.load();
-    rimSound.load();
+    percSound.load();
     clapSound.load();
+    extraSound.load();
 }
 
 // plays the audio for the column with index num
 function playSoundCol(num) {
-    for(var i = 0; i < hats.length; i++) {
+    for(let i = 0; i < hats.length; i++) {
         if(document.getElementById("hat" + num).style.backgroundColor == selectedCol) {
             hatSound.currentTime = 0;
             hatSound.play();
@@ -301,18 +310,42 @@ function playSoundCol(num) {
             openhatSound.currentTime = 0;
             openhatSound.play();
         }
-        if(document.getElementById("rim" + num).style.backgroundColor == selectedCol) {
-            rimSound.currentTime = 0;
-            rimSound.play();
+        if(document.getElementById("perc" + num).style.backgroundColor == selectedCol) {
+            percSound.currentTime = 0;
+            percSound.play();
         }
         if(document.getElementById("clap" + num).style.backgroundColor == selectedCol) {
             clapSound.currentTime = 0;
             clapSound.play();
         }
+        if(document.getElementById("extra" + num).style.backgroundColor == selectedCol) {
+            extraSound.currentTime = 0;
+            extraSound.play();
+        }
     }
 }
 
-var intervalID = setInterval(update, 1000/((2*BPM)/60));
+let starttime;
+function increment(timestamp, duration) {
+    let runtime = timestamp - starttime;
+    if(runtime > duration && !paused) {
+        starttime = timestamp;
+        update();
+    }
+    requestAnimationFrame(function(timestamp) {
+        increment(timestamp, BPMCALC);
+    });
+}
+
+function start() {
+    requestAnimationFrame(function(timestamp) {
+        starttime = timestamp;
+        increment(timestamp, BPMCALC);
+    });
+}
+
+loadSound();
+start();
 
 function update() {
     if(paused == false) {
@@ -322,7 +355,7 @@ function update() {
         }
         document.getElementById("count" + pos).style.backgroundColor = selectedCol;
         
-        var prev;
+        let prev;
         if(pos > 0) {
             prev = pos - 1;
         }
@@ -330,8 +363,6 @@ function update() {
             prev = snares.length - 1;
         }
         document.getElementById("count" + prev).style.backgroundColor = unselectedCol;
-
-        //loadSound();
         playSoundCol(pos);
 
         pos++;
@@ -344,14 +375,14 @@ function update() {
 
 */
 
-var slider = document.getElementById("bpmslider");
-var bpmlabel = document.getElementById("bpmlabel");
+let slider = document.getElementById("bpmslider");
+let bpmlabel = document.getElementById("bpmlabel");
 
 slider.oninput = function() {
     BPM = slider.value;
+    BPMCALC = 1000/((4*BPM)/60);
     bpmlabel.innerHTML = BPM + " BPM";
-    clearInterval(intervalID);
-    intervalID = setInterval(update, 1000/((2*BPM)/60));
+    start(BPMCALC);
 }
 
 /*
@@ -360,7 +391,7 @@ slider.oninput = function() {
 
 */
 
-var kitmenu = document.getElementById("kitmenu");
+let kitmenu = document.getElementById("kitmenu");
 
 // change all the sound paths to whatevers in the dropdown menu
 kitmenu.onchange = function() {
@@ -371,6 +402,10 @@ kitmenu.onchange = function() {
     snareSound.src = path + "snare.mp3";
     kickSound.src = path + "kick.mp3";
     openhatSound.src = path + "openhat.mp3";
-    rimSound.src = path + "rim.mp3";
+    percSound.src = path + "perc.mp3";
     clapSound.src = path + "clap.mp3";
+    extraSound.src = path + "extra.mp3";
 }
+
+// TODO add volume slider
+// TODO clean up code using class names

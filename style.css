@@ -37,7 +37,6 @@ body {
     top:50%;
     left:50%;
     width:95%;
-    height:431px;
     margin-left:auto;
     margin-right:auto;
 }
@@ -97,12 +96,12 @@ body {
     background-size:100% 100%;
 }
 
-.iconboard > #rimicon {
+.iconboard > #percicon {
     height:65px;
     width:100%;
     background-color:black;
     margin:2px 0px;
-    background-image:url("images/rim.png");
+    background-image:url("images/perc.png");
     background-size:100% 100%;
 }
 
@@ -112,6 +111,15 @@ body {
     background-color:black;
     margin:2px 0px;
     background-image:url("images/clap.png");
+    background-size:100% 100%;
+}
+
+.iconboard > #extraicon {
+    height:65px;
+    width:100%;
+    background-color:black;
+    margin:2px 0px;
+    background-image:url("images/extra.png");
     background-size:100% 100%;
 }
 
@@ -211,20 +219,20 @@ body {
     background-color:darkgrey;
 }
 
-#rimoption {
+#percoption {
     width:100%;
     height:65px;
     margin:2px 0px;
     display:flex;
 }
 
-#rimoption > #rimfill {
+#percoption > #percfill {
     width:1000px;
     border:1px solid black;
     background-color:lightgrey;
 }
 
-#rimoption > #rimerase {
+#percoption > #percerase {
     width:1000px;
     border:1px solid black;
     background-color:darkgrey;
@@ -244,6 +252,25 @@ body {
 }
 
 #clapoption > #claperase {
+    width:1000px;
+    border:1px solid black;
+    background-color:darkgrey;
+}
+
+#extraoption {
+    width:100%;
+    height:65px;
+    margin:2px 0px;
+    display:flex;
+}
+
+#extraoption > #extrafill {
+    width:1000px;
+    border:1px solid black;
+    background-color:lightgrey;
+}
+
+#extraoption > #extraerase {
     width:1000px;
     border:1px solid black;
     background-color:darkgrey;
@@ -329,13 +356,13 @@ body {
     background-color:grey;
 }
 
-#rimrow {
+#percrow {
     margin:2px 0px;
     display:flex;
     height:65px;
 }
 
-.rimbutton {
+.percbutton {
     width:1000px;
     border:1px solid black;
     background-color:grey;
@@ -348,6 +375,18 @@ body {
 }
 
 .clapbutton {
+    width:1000px;
+    border:1px solid black;
+    background-color:grey;
+}
+
+#extrarow {
+    margin:2px 0px;
+    display:flex;
+    height:65px;
+}
+
+.extrabutton {
     width:1000px;
     border:1px solid black;
     background-color:grey;
@@ -389,7 +428,7 @@ body {
 }
 
 .slider {
-    -webkit-appearance:none;
+    appearance:none;
     background-color:black;
     border:2px solid grey;
     height:25px;

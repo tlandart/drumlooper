@@ -17,15 +17,16 @@
                 <div id="snareicon"></div>
                 <div id="kickicon"></div>
                 <div id="openhaticon"></div>
-                <div id="rimicon"></div>
+                <div id="percicon"></div>
                 <div id="clapicon"></div>
+                <div id="extraicon"></div>
             </div>
 
             <div class="musicboard">
 
                 <div id="countrow">
                     <script>
-                        for(var i = 0; i < 16; i++) {
+                        for(var i = 0; i < 32; i++) {
                             var div = document.createElement("div");
                             div.id = "count" + i;
                             div.className = "countbutton";
@@ -36,7 +37,7 @@
 
                 <div id="hatrow">
                     <script>
-                        for(var i = 0; i < 16; i++) {
+                        for(var i = 0; i < 32; i++) {
                             var div = document.createElement("div");
                             div.id = "hat" + i;
                             div.className = "hatbutton";
@@ -49,7 +50,7 @@
                 
                 <div id="snarerow">
                     <script>
-                        for(var i = 0; i < 16; i++) {
+                        for(var i = 0; i < 32; i++) {
                             var div = document.createElement("div");
                             div.id = "snare" + i;
                             div.className = "snarebutton";
@@ -60,7 +61,7 @@
                 
                 <div id="kickrow">
                     <script>
-                        for(var i = 0; i < 16; i++) {
+                        for(var i = 0; i < 32; i++) {
                             var div = document.createElement("div");
                             div.id = "kick" + i;
                             div.className = "kickbutton";
@@ -71,7 +72,7 @@
                 
                 <div id="openhatrow">
                     <script>
-                        for(var i = 0; i < 16; i++) {
+                        for(var i = 0; i < 32; i++) {
                             var div = document.createElement("div");
                             div.id = "openhat" + i;
                             div.className = "openhatbutton";
@@ -80,24 +81,35 @@
                     </script>
                 </div>
                 
-                <div id="rimrow">
+                <div id="percrow">
                     <script>
-                        for(var i = 0; i < 16; i++) {
+                        for(var i = 0; i < 32; i++) {
                             var div = document.createElement("div");
-                            div.id = "rim" + i;
-                            div.className = "rimbutton";
-                            document.getElementById("rimrow").appendChild(div);
+                            div.id = "perc" + i;
+                            div.className = "percbutton";
+                            document.getElementById("percrow").appendChild(div);
                         }
                     </script>
                 </div>
                 
                 <div id="claprow">
                     <script>
-                        for(var i = 0; i < 16; i++) {
+                        for(var i = 0; i < 32; i++) {
                             var div = document.createElement("div");
                             div.id = "clap" + i;
                             div.className = "clapbutton";
                             document.getElementById("claprow").appendChild(div);
+                        }
+                    </script>
+                </div>
+                
+                <div id="extrarow">
+                    <script>
+                        for(var i = 0; i < 32; i++) {
+                            var div = document.createElement("div");
+                            div.id = "extra" + i;
+                            div.className = "extrabutton";
+                            document.getElementById("extrarow").appendChild(div);
                         }
                     </script>
                 </div>
@@ -121,22 +133,27 @@
                     <div id="openhatfill"></div>
                     <div id="openhaterase"></div>
                 </div>
-                <div id="rimoption">
-                    <div id="rimfill"></div>
-                    <div id="rimerase"></div>
+                <div id="percoption">
+                    <div id="percfill"></div>
+                    <div id="percerase"></div>
                 </div>
                 <div id="clapoption">
                     <div id="clapfill"></div>
                     <div id="claperase"></div>
+                </div>
+                <div id="extraoption">
+                    <div id="extrafill"></div>
+                    <div id="extraerase"></div>
                 </div>
             </div>
         </div>
 
         <div class="bpmcontainer">
             <select id="kitmenu">
-                <option value="trap" selected>Trap</option>
-                <option value="live">Live</option>
-                <option value="machine">Machine</option>
+                <option value="1539" selected>1539</option>
+                <option value="mach">mach</option>
+                <option value="alb">alb</option>
+                <option value="daft">daft</option>
             </select>
 
             <input type="range" min="20" max="400" value="154" id="bpmslider" class="slider">
