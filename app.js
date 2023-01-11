@@ -1,7 +1,9 @@
-// NOTE: ONLY WORKS WITH A SERVER, CANNOT JUST OPEN THE INDEX FILE
+// NOTE: ONLY WORKS WITH A SERVER, CANNOT JUST OPEN THE INDEX FILE/HOST LOCALLY DUE THE NATURE OF GETFILE
+
+let firstGesture = true;
 
 let BPM = 154;
-let BPMCALC = 1000/((4*BPM)/60);
+let BPMCALC = (60/BPM)/4;
 let swing = -BPMCALC*0;
 const selectedCol = "pink";
 const unselectedCol = "grey";
@@ -16,7 +18,7 @@ let hatSound, snareSound, kickSound, openhatSound, percSound, clapSound, extraSo
 let pos = 0;
 
 // WHETHER THE TRACK IS PAUSED OR NOT
-let paused = false;
+let paused = true;
 
 /*
 
@@ -26,11 +28,33 @@ let paused = false;
 
 let pause = document.getElementById("pausebutton");
 
+onkeydown = (e) => {
+    if(e.code === "Space" || e.key === " " || e.keyCode === 32) {
+        pauseFunction();
+    }
+}
+
 pause.addEventListener("mousedown", function() {
-    pauseFunction();
+    pauseFunction()
 });
 
 function pauseFunction() {
+    // we need the user to make a gesture before the audio can play, so we start the page paused. the user will unpause and then we are allowed to load the audiocontext and all the samples and the rest of the website
+    if(firstGesture) {
+        firstGesture = false;
+        audioCtx = new AudioContext();
+        setupSamples().then((samples) => {
+            hatSound = samples[0];
+            snareSound = samples[1];
+            kickSound = samples[2];
+            openhatSound = samples[3];
+            percSound = samples[4];
+            clapSound = samples[5];
+            extraSound = samples[6];
+            start();
+        });
+    }
+
     pause.style.backgroundImage = paused ? "url('images/pause.png')" : "url('images/play.png')";
     paused = !paused;
 }
@@ -217,7 +241,7 @@ optionButtonEventAdder(extraFill, extraErase, extras);
 
 // LARGELY ADAPTED FROM https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Advanced_techniques
 
-let ctx = new AudioContext();
+let audioCtx = null;
 let soundBuffer = null;
 
 async function getFile(audioContext, filepath) {
@@ -240,7 +264,7 @@ async function setupSamples() {
     let samples = [];
 
     for(let i=0; i<7; i++) {
-        samples[i] = await getFile(ctx, paths[i]);
+        samples[i] = await getFile(audioCtx, paths[i]);
     }
     return samples;
 }
@@ -252,69 +276,68 @@ function playSample(audioContext, audioBuffer, time) {
     return sampleSource;
 }
 
-setupSamples().then((samples) => {
-    hatSound = samples[0];
-    snareSound = samples[1];
-    kickSound = samples[2];
-    openhatSound = samples[3];
-    percSound = samples[4];
-    clapSound = samples[5];
-    extraSound = samples[6];
-    start();
-});
-
-// plays the audio for the column at that position
-function playSoundCol(num) {
+// plays the audio for the column at that after delay milliseconds
+function playSoundCol(num, delay) {
     if(document.getElementById("hat" + num).style.backgroundColor == selectedCol) {
-        playSample(ctx,hatSound,0);
+        playSample(audioCtx,hatSound,delay);
     }
     if(document.getElementById("snare" + num).style.backgroundColor == selectedCol) {
-        playSample(ctx,snareSound,0);
+        playSample(audioCtx,snareSound,delay);
     }
     if(document.getElementById("kick" + num).style.backgroundColor == selectedCol) {
-        playSample(ctx,kickSound,0);
+        playSample(audioCtx,kickSound,delay);
     }
     if(document.getElementById("openhat" + num).style.backgroundColor == selectedCol) {
-        playSample(ctx,openhatSound,0);
+        playSample(audioCtx,openhatSound,delay);
     }
     if(document.getElementById("perc" + num).style.backgroundColor == selectedCol) {
-        playSample(ctx,percSound,0);
+        playSample(audioCtx,percSound,delay);
     }
     if(document.getElementById("clap" + num).style.backgroundColor == selectedCol) {
-        playSample(ctx,clapSound,0);
+        playSample(audioCtx,clapSound,delay);
     }
     if(document.getElementById("extra" + num).style.backgroundColor == selectedCol) {
-        playSample(ctx,extraSound,0);
+        playSample(audioCtx,extraSound,delay);
     }
 }
 
 // DONE SOUND STUFF
 
-let starttime;
-function increment(timestamp, duration) {
-    let runtime = timestamp - starttime;
-    if(runtime > duration + swing && !paused) {
-        starttime = timestamp;
-        update();
-        // the swing will add or subtract from the duration (longer or shorter wait time)
-        swing = pos % 2 === 0 ? -Math.abs(swing):Math.abs(swing);
-    }
-    requestAnimationFrame(function(timestamp) {
-        increment(timestamp, BPMCALC);
-    });
-}
+// THE DRUM LOOP ------
+
+// LARGELY ADAPTED FROM https://web.dev/audio-scheduling/
+// basically: roughly every 'lookahead' milliseconds, call the scheduler. the scheduler will update the page and call to play the sound at roughly the right delay so it has the right timing (lined up with the grid). this means that the overall timer will not have any delays or lag (compared to if we just used setInterval() by itself)
+
+let interval = null; // for using setInterval(), clearInerval(), etc
+let lookahead = 25.0; // how often the interval will be called (ms)
+
+let nextHitTime = 0; // the time (since we opened the page) that we need to play the sounds at the current column
 
 function start() {
-    requestAnimationFrame(function(timestamp) {
-        starttime = timestamp;
-        increment(timestamp, BPMCALC);
-    });
+    clearInterval(interval);
+    interval = setInterval(() => {
+        scheduler();
+    }, lookahead);
+}
+
+function scheduler() {
+    // we'll update based on the very precise timer in audioCtx
+    while(nextHitTime < audioCtx.currentTime) {
+        update();
+    }
+}
+
+function scheduleHit(time) {
+    playSoundCol(pos, time);
 }
 
 function update() {
+    nextHitTime += BPMCALC + swing;
+    swing = pos % 2 === 0 ? Math.abs(swing):-Math.abs(swing);
+
     if(paused == false) {
 
-        if(pos >= snares.length) {
+        if(pos >= numButtons) {
             pos = 0;
         }
         visualSelect(document.getElementById("count" + pos));
@@ -324,12 +347,11 @@ function update() {
             prev = pos - 1;
         }
         else {
-            prev = snares.length - 1;
+            prev = numButtons - 1;
         }
         visualDeselect(document.getElementById("count" + prev));
 
-        playSoundCol(pos);
-
+        scheduleHit(nextHitTime);
         pos++;
     }
 }
@@ -345,9 +367,10 @@ let bpmlabel = document.getElementById("bpmlabel");
 
 bpmslider.oninput = function() {
     BPM = bpmslider.value;
-    BPMCALC = 1000/((4*BPM)/60);
+    BPMCALC = (60/BPM)/4;
+    swing = (swingslider.value/100)*-BPMCALC;
     bpmlabel.innerHTML = BPM + " BPM";
-    start(BPMCALC);
+    start();
 }
 
 let swingslider = document.getElementById("swingslider");
@@ -356,7 +379,7 @@ let swinglabel = document.getElementById("swinglabel");
 swingslider.oninput = function() {
     swing = (swingslider.value/100)*-BPMCALC;
     swinglabel.innerHTML = swingslider.value + "% swing";
-    start(BPMCALC);
+    start();
 }
 
 /*
@@ -386,5 +409,3 @@ kitmenu.onchange = function() {
 }
 
 // TODO add volume slider
-// TODO clean up code using class names
-// TODO add swing slider

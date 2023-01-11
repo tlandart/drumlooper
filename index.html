@@ -80,12 +80,18 @@
                 <option value="daft">daft</option>
                 <option value="threat">threat</option>
             </select>
-
-            <input type="range" min="20" max="400" value="154" id="bpmslider" class="slider">
-            <span class="optionlabel" id="bpmlabel">154 BPM</span>
-
-            <input type="range" min="0" max="100" value="0" id="swingslider" class="slider" style="width:25%">
-            <span class="optionlabel" id="swinglabel">0% swing</span>
+            <div class="bpmcontainercol">
+                <div style="width:25%">
+                    <div class="optionlabel" id="bpmlabel">154 BPM</div>
+    
+                    <div class="optionlabel" id="swinglabel">0% swing</div>
+                </div>
+                <div style="width:75%">
+                    <input type="range" min="20" max="250" value="154" id="bpmslider" class="slider">
+        
+                    <input type="range" min="0" max="100" value="0" id="swingslider" class="slider">
+                </div>
+            </div>
         </div>
 
         <div class="bottom-bar">
