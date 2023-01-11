@@ -3,9 +3,11 @@ A drum sequencer made using HTML/javascript.
 
 # Features 🥁
 * 7 different drum components
-* 4 different presets for sounds
+* 5 different presets for sounds
 * Dynamic BPM slider
+* Dynamic swing slider
 * Pause/play button
 * Fill/erase for each row
+* Drag to create patterns efficiently
 
-https://user-images.githubusercontent.com/76754714/211461959-26a37f8f-4703-4e1a-9bf7-0f646acc2f1e.mp4
+https://user-images.githubusercontent.com/76754714/211730108-b8bf96a9-c83a-497f-916a-00112b5e03c3.mp4
