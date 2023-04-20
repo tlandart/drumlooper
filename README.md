@@ -1,6 +1,8 @@
 # drumlooper
 A drum sequencer made using HTML/javascript.
 
+LIVE DEMO: https://tlandart.github.io/
+
 # Features 🥁
 * 7 different drum components
 * 5 different presets for sounds
